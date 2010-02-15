@@ -1,0 +1,45 @@
+/* variable declaration */
+$x: red;
+
+/* function declaration */
+$color(r) {
+    background-color: $r;
+    border-color: $r;
+}
+
+.foo { 
+     color: $x;
+     $color(blue);
+     
+     /* use ^ to remove the space when making the css rule .foo.bar */
+     ^.bar {
+          /* the change to $x will only be maintained in the current scope */
+          $x: green;
+          $color($x);
+     }
+     .baz {
+          /* should be the same as .bar above */
+          $color($x);
+     }
+     :clicked {
+         color: gray; 
+     }
+}
+
+/* function with more than one argument */
+$color2(r, p) {
+    background-color: $r;
+    border-color: $p;
+}
+
+.foo.default {
+    $color2(blue, red);
+}
+
+/* simple math (no precidence yet) */
+.fooo { 
+      $x: 3px;
+
+      bar: $( ( $x * 2 ) + 2px);
+}
+
